@@ -1,5 +1,16 @@
 Voici quelques idées pour te démarquer, montrer que t’es moderne, compétent, et pro :
 
+-------------------------------
+|    🔝 Navbar (menu)         | ← fixe, toujours visible
+-------------------------------
+|    🎯 Hero Section          | ← très visuelle, message clé
+-------------------------------
+|    🔽 Contenu principal     | ← articles, infos, fonctionnalités...
+-------------------------------
+|    📫 Footer                |
+-------------------------------
+
+
 🎯 1. Structure impactante
 Hero section ultra claire :
 
@@ -12,7 +23,7 @@ Framework React (ou Next.js si tu veux aller plus loin avec SSR)
 Tailwind CSS pour le style propre et moderne (ça claque visuellement direct)
 -----------------------------------------------------
 
-
+🚀🚀🚀 project cards video !!
 
 Framer Motion pour de petites animations fluides, rien de too much
 
