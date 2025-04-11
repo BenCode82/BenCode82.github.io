@@ -1,0 +1,36 @@
+import { useState, useEffect } from 'react';
+
+function App() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  // Utilisation d'un key unique basé sur activeTab pour redémarrer l'animation
+  useEffect(() => {
+    // Force un rerender en changeant le key
+    setKey(activeTab);
+  }, [activeTab]);
+
+  const [key, setKey] = useState(activeTab);
+
+  return (
+    <main className="min-h-screen bg-neutral-900 flex flex-col justify-center px-4 py-20">
+      <div className="flex">
+        {/* Colonne gauche */}
+        <div className="w-1/2 p-10">
+          <button onClick={() => setActiveTab('home')}>Home</button>
+          <button onClick={() => setActiveTab('projects')}>Projects</button>
+          <button onClick={() => setActiveTab('contact')}>Contact</button>
+        </div>
+
+        {/* Colonne droite : contenu dynamique */}
+        <div
+          key={key} // Re-trigger l'animation à chaque changement de activeTab
+          className="w-1/2 p-10 flex flex-col justify-center transform translate-x-full opacity-0 animate-slideInFromRight"
+        >
+          {activeTab === "home" && <div>Home Content</div>}
+          {activeTab === "projects" && <div>Projects Content</div>}
+          {activeTab === "contact" && <div>Contact Content</div>}
+        </div>
+      </div>
+    </main>
+  );
+}

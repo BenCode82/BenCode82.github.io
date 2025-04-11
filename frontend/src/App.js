@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function ProjectCard({ title, description, image, link }) {
   return (
@@ -15,60 +15,171 @@ function ProjectCard({ title, description, image, link }) {
 }
 
 function App() {
+  const [activeTab, setActiveTab] = useState("home");
+
+    // Utilisation d'un key unique basé sur activeTab pour redémarrer l'animation
+    useEffect(() => {
+      setKey(activeTab);
+    }, [activeTab]);
+
+    const [key, setKey] = useState(activeTab);
+
   return (
     <>
-      <main className="min-h-screen bg-gray-100 flex flex-col justify-center px-4 py-20">
-        <div className="w-full max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 rounded-3xl shadow-xl bg-gradient-to-br from-indigo-100 via-white to-indigo-50 p-10">
-          {/* Hero */}
-          <div className="text-center lg:text-left space-y-6 max-w-xl">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900">
-              Benjamin Montet
-            </h1>
-            <p className="text-xl text-gray-600">
-            – Développeur Web Fullstack -
-            </p>
-            <div className="flex justify-center lg:justify-start gap-4 flex-wrap">
-              <a
-                href="#contact"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl text-sm font-semibold shadow"
-              >
-                Me contacter
-              </a>
-              <a
-                href="/CV_Benjamin.pdf"
-                className="bg-white border border-gray-300 hover:border-gray-400 text-gray-800 px-6 py-3 rounded-2xl text-sm font-semibold shadow"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Voir mon CV
-              </a>
-            </div>
-          </div>
+    <main className="font-poppins min-h-screen bg-neutral-900 flex flex-col justify-center px-4 py-20">
+      <div className="absolute inset-[50px] bg-zinc-900 w-auto h-auto flex flex-col lg:flex-row justify-between gap-12 shadow-xl p-10 border border-white dark:border-black">
 
-          {/* Projets */}
-          <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
-            <ProjectCard
-              title="PSG Infos"
-              description="Fil d’actualités dynamique sur le PSG (React + API Django)"
-              image="/psginfos.jpg"
-              link="https://benjaminmontet.me/psginfos/"
-            />
-            <ProjectCard
-              title="Snake"
-              description="Jeu 'Snake' codé en Javascript"
-              image="/snake.jpg"
-              link="https://benjaminmontet.me/snake/"
-            />
+        {/* Colonne gauche : menu (Hero) */}
+        <div className="w-1/2 p-10 flex flex-col justify-start gap-6">
+          <h1 className="text-6xl font-bold text-white/80 dark:text-black">
+            Benjamin Montet
+          </h1>
+          <p className="text-2xl text-white dark:text-black italic">
+            – Développeur Web Fullstack -
+          </p>
+
+          <div
+            key={key}
+            className="h-[0.5px] bg-gray-400/30 w-0 animate-[width-expand_0.5s_linear_0.5s_forwards]"
+          ></div>
+
+          <nav className="flex flex-col justify-start gap-6 mt-28">
+
+            <button
+              onClick={() => setActiveTab("home")}
+              className={`
+                text-left text-2xl font-bold transition-all duration-300 ease-in-out
+                ${
+                  activeTab === "home"
+                    ? "text-white translate-x-2"
+                    : "text-white hover:text-gray-400 hover:translate-x-3"
+                }
+              `}
+            >
+              {activeTab === "home" ? "•" : ""} Accueil
+            </button>
+
+            <button
+              onClick={() => setActiveTab("projects")}
+              className={`
+                text-left text-2xl font-bold transition-all duration-300 ease-in-out
+                ${
+                  activeTab === "projects"
+                    ? "text-white translate-x-2"
+                    : "text-white hover:text-gray-400 hover:translate-x-2"
+                }
+              `}
+            >
+              {activeTab === "projects" ? "•" : ""} Projets
+            </button>
+
+            <button
+              onClick={() => setActiveTab("contact")}
+              className={`
+                text-left text-2xl font-bold transition-all duration-300 ease-in-out
+                ${
+                  activeTab === "contact"
+                    ? "text-white translate-x-2"
+                    : "text-white hover:text-gray-400 hover:translate-x-2"
+                }
+              `}
+            >
+              {activeTab === "contact" ? "•" : ""} Contact
+            </button>
+
+          </nav>
+        </div>
+
+
+        <div
+          key={key}
+          className="h-0 w-[0.5px] bg-gray-400/30 animate-[height-expand_0.5s_linear_0.5s_forwards]"
+        ></div>
+
+        {/* Colonne droite : contenu dynamique */}
+        <div className="w-1/2 p-10 flex overflow-x-hidden">
+
+          <div
+            key={key} // Re-trigger l'animation à chaque changement de activeTab
+            className="flex flex-col justify-center transform translate-x-full opacity-0 animate-slideInFromRight"
+          >
+            {activeTab === "home" && (
+
+
+              <div className="gap-6">
+                <p className="text-2xl flex justify-end mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
+                  En reconversion professionnelle, j'ai évolué dans le domaine des
+                  sciences tout au long de mon parcours professionnel.
+                  Passionné par Python, la résolution de problèmes complexes et
+                  l’optimisation du code.
+                  Je suis à la recherche d’une expérience professionnelle enrichissante.
+                </p>
+
+                <div flex className="flex justify-end">
+                  <a
+                    href="/CV_Benjamin.pdf"
+                    className="text-4xl w-fit border border-gray-300 hover:border-gray-400 text-white px-6 py-3 rounded-2xl font-semibold shadow"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Voir mon CV
+                  </a>
+                </div>
+
+              </div>
+
+            )}
+
+            {activeTab === "projects" && (
+
+              <div className="lg:justify-end">
+                <h2 className="text-2xl font-semibold mb-4">Mes Projets</h2>
+                {/* Ici tu peux réutiliser tes <ProjectCard /> */}
+                <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
+                  <ProjectCard
+                    title="PSG Infos"
+                    description="Fil d’actualités dynamique sur le PSG (React + API Django)"
+                    image="/psginfos.jpg"
+                    link="https://benjaminmontet.me/psginfos/"
+                  />
+                  <ProjectCard
+                    title="Snake"
+                    description="Jeu 'Snake' codé en Javascript"
+                    image="/snake.jpg"
+                    link="https://benjaminmontet.me/snake/"
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeTab === "contact" && (
+              <div className="flex justify-center lg:justify-end gap-4 flex-wrap">
+                <p className="text-4xl flex justify-end mb-14 text-white">benjamin.montet.dev@gmail.com</p>
+
+                <div flex className="flex justify-end">
+                  <a
+                    href="https://www.linkedin.com/in/benjamin-montet-1a2141317/"
+                    className="text-4xl w-fit hover:border-gray-700 text-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    www.linkedin.com/benjamin.montet
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </main>
 
-      {/* Footer */}
-      <footer id="contact" className="bg-gray-100 py-10 text-center">
-        <h3 className="text-xl font-semibold mb-4">Un projet ? Un job ?</h3>
-        <p className="text-gray-600 mb-2">📧 benjamin.montet.dev@gmail.com</p>
-        <p className="text-gray-500 text-sm">© {new Date().getFullYear()} Benjamin Montet</p>
-      </footer>
+
+      </div>
+
+      {/* Footer en bas à gauche */}
+      <div className="absolute bottom-4 left-4 text-sm text-white opacity-60">
+        © Benjamin Montet
+      </div>
+
+    </main>
     </>
   );
 }

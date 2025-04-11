@@ -1,13 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* index.css */
-/* par exemple un gris bleu clair */
+
 /* body {
-  @apply bg-[#f0f4f8];
+  background-color: #ffffff;
 } */
 
-body {
-  background-color: #ffffff;
+@keyframes width-expand {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes height-expand {
+  from { height: 0; }
+  to { height: 100%; }
 }
