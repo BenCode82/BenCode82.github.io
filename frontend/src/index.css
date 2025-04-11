@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css */
+/* par exemple un gris bleu clair */
+/* body {
+  @apply bg-[#f0f4f8];
+} */
+
+body {
+  background-color: #ffffff;
+}
