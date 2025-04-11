@@ -3,11 +3,15 @@ import React, { useState, useEffect } from 'react';
 function ProjectCard({ title, description, image, link }) {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 w-full sm:w-80">
-      <div className="rounded-2xl overflow-hidden shadow-lg transform transition hover:scale-105 hover:shadow-2xl bg-white">
+      <div
+      className="rounded-md overflow-hidden shadow-lg
+      transform transition hover:scale-105 hover:shadow-2xl bg-gray-400/30
+      border border-white outline outline-20"
+      >
         <img src={image} alt={title} className="w-full h-48 object-cover" />
-        <div className="p-4">
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
-          <p className="text-gray-600">{description}</p>
+        <div className="p-4 text-center">
+          <h3 className="text-white text-xl font-semibold mb-2">{title}</h3>
+          <p className="text-white italic">{description}</p>
         </div>
       </div>
     </a>
@@ -15,7 +19,7 @@ function ProjectCard({ title, description, image, link }) {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("accueil");
 
     // Utilisation d'un key unique basé sur activeTab pour redémarrer l'animation
     useEffect(() => {
@@ -31,65 +35,40 @@ function App() {
 
         {/* Colonne gauche : menu (Hero) */}
         <div className="w-1/2 p-10 flex flex-col justify-start gap-6">
-          <h1 className="text-6xl font-bold text-white/80 dark:text-black">
+          <h1 className="text-7xl font-bold text-white/80 dark:text-black opacity-0 animate-scintillement">
             Benjamin Montet
           </h1>
-          <p className="text-2xl text-white dark:text-black italic">
-            – Développeur Web Fullstack -
+          <p className="text-2xl text-white dark:text-black font-semibold italic">
+            – Développeur Web Fullstack Junior -
           </p>
 
           <div
             key={key}
-            className="h-[0.5px] bg-gray-400/30 w-0 animate-[width-expand_0.5s_linear_0.5s_forwards]"
+            className="h-[0.5px] bg-gray-400/30 w-0 animate-[width-expand_0.5s_linear_0.9s_forwards]"
           ></div>
 
           <nav className="flex flex-col justify-start gap-6 mt-28">
 
+          {["accueil", "projets", "contact"].map((tab) => (
             <button
-              onClick={() => setActiveTab("home")}
+              key={tab}
+              onClick={() => setActiveTab(tab)}
               className={`
-                text-left text-2xl font-bold transition-all duration-300 ease-in-out
+                text-left text-2xl font-bold
+                transition-all duration-300 ease-in-out
                 ${
-                  activeTab === "home"
-                    ? "text-white translate-x-2"
-                    : "text-white hover:text-gray-400 hover:translate-x-3"
+                  activeTab === tab
+                    ? "text-gray-500 translate-x-2"
+                    : "text-white hover:text-gray-300 hover:translate-x-2"
                 }
               `}
             >
-              {activeTab === "home" ? "•" : ""} Accueil
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
-
-            <button
-              onClick={() => setActiveTab("projects")}
-              className={`
-                text-left text-2xl font-bold transition-all duration-300 ease-in-out
-                ${
-                  activeTab === "projects"
-                    ? "text-white translate-x-2"
-                    : "text-white hover:text-gray-400 hover:translate-x-2"
-                }
-              `}
-            >
-              {activeTab === "projects" ? "•" : ""} Projets
-            </button>
-
-            <button
-              onClick={() => setActiveTab("contact")}
-              className={`
-                text-left text-2xl font-bold transition-all duration-300 ease-in-out
-                ${
-                  activeTab === "contact"
-                    ? "text-white translate-x-2"
-                    : "text-white hover:text-gray-400 hover:translate-x-2"
-                }
-              `}
-            >
-              {activeTab === "contact" ? "•" : ""} Contact
-            </button>
+          ))}
 
           </nav>
         </div>
-
 
         <div
           key={key}
@@ -103,15 +82,14 @@ function App() {
             key={key} // Re-trigger l'animation à chaque changement de activeTab
             className="flex flex-col justify-center transform translate-x-full opacity-0 animate-slideInFromRight"
           >
-            {activeTab === "home" && (
-
+            {activeTab === "accueil" && (
 
               <div className="gap-6">
                 <p className="text-2xl flex justify-end mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
                   En reconversion professionnelle, j'ai évolué dans le domaine des
-                  sciences tout au long de mon parcours professionnel.
+                  sciences tout au long de mon parcours professionnel.<br></br><br></br>
                   Passionné par Python, la résolution de problèmes complexes et
-                  l’optimisation du code.
+                  l’optimisation du code.<br></br><br></br>
                   Je suis à la recherche d’une expérience professionnelle enrichissante.
                 </p>
 
@@ -130,12 +108,15 @@ function App() {
 
             )}
 
-            {activeTab === "projects" && (
+            {activeTab === "projets" && (
 
               <div className="lg:justify-end">
-                <h2 className="text-2xl font-semibold mb-4">Mes Projets</h2>
+                <h2 className="text-white text-xl font-semibold italic mb-16">
+                  Voici mes premiers projets de code 'en solo' pour aborder différentes technos.<br></br><br></br>
+                  J'ai surtout été guidé par l'envie d'apprendre en m'amusant et en écoutant les envies de mon fils ❤️ ...
+                </h2>
                 {/* Ici tu peux réutiliser tes <ProjectCard /> */}
-                <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
+                <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
                   <ProjectCard
                     title="PSG Infos"
                     description="Fil d’actualités dynamique sur le PSG (React + API Django)"

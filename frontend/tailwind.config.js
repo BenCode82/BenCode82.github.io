@@ -12,6 +12,7 @@ module.exports = {
 
       animation: {
         slideInFromRight: 'slideInFromRight 1.5s ease-out 0.5s forwards', // Définir le délai de 1 seconde
+        scintillement: 'scintillement 3s ease-out 0s forwards', // Définir le délai de 1 seconde
       },
 
       keyframes: {
@@ -25,6 +26,22 @@ module.exports = {
             opacity: '1', // Devient visible
           },
         },
+
+        scintillement: {
+          '0%': {
+            opacity: '0.1',
+            color: '#dbd17b', // Rouge au début (ou utilisez une couleur Tailwind comme 'text-red-500')
+          },
+          '50%': {
+            opacity: '0.45',
+            color: '#154458', // Jaune à mi-chemin
+          },
+          '100%': {
+            opacity: '1',
+            color: '#0c4b58', // Vert à la fin
+          },
+        },
+
       },
 
     },
