@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+import * as THREE from "three";
+import CELLS from "vanta/dist/vanta.cells.min";
 
 function ProjectCard({ title, description, image, link }) {
   return (
@@ -20,25 +23,79 @@ function ProjectCard({ title, description, image, link }) {
 
 function App() {
   const [activeTab, setActiveTab] = useState("accueil");
+  const [key, setKey] = useState(activeTab);
+  const vantaRef = useRef(null);
+  const vantaEffect = useRef(null);
 
-    // Utilisation d'un key unique basé sur activeTab pour redémarrer l'animation
-    useEffect(() => {
-      setKey(activeTab);
-    }, [activeTab]);
+  // Utilisation d'un key unique basé sur activeTab pour redémarrer l'animation
+  useEffect(() => {
+    setKey(activeTab);
+  }, [activeTab]);
 
-    const [key, setKey] = useState(activeTab);
+  const getCssVar = (varName) =>
+    getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+
+  useEffect(() => {
+    const vcolor1 = getCssVar("--vanta-color1");
+    const vcolor2 = getCssVar("--vanta-color2");
+
+    if (!vantaEffect.current && vantaRef.current) {
+
+      vantaEffect.current = CELLS({
+        el: vantaRef.current,
+        THREE: THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        color1: vcolor1,
+        color2: vcolor2,
+        size: 0.2,
+        speed: 0.0,
+
+        zoom: 50,
+      });
+    }
+
+    return () => {
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
+        vantaEffect.current = null;
+      }
+    };
+  }, []);
+
+
 
   return (
     <>
-    <main className="font-poppins min-h-screen bg-neutral-900 flex flex-col justify-center px-4 py-20">
-      <div className="absolute inset-[50px] bg-zinc-900 w-auto h-auto flex flex-col lg:flex-row justify-between gap-12 shadow-xl p-10 border border-white dark:border-black">
+      <main
+        className=" font-poppins min-h-screen bg-neutral-900
+                    flex flex-col justify-center px-4 py-20 -z-10">
+
+      <div
+        ref={vantaRef}
+        className=" absolute inset-[50px]
+                    w-auto h-auto
+                    opacity-40 z-0"></div>
+
+      <div
+        // ref={vantaRef}
+        className=" absolute inset-[50px]
+                    w-auto h-auto flex flex-col lg:flex-row
+                    justify-between gap-12 shadow-xl p-10
+                    border border-white dark:border-black
+                    opacity-90 z-10">
+
 
         {/* Colonne gauche : menu (Hero) */}
         <div className="w-1/2 p-10 flex flex-col justify-start gap-6">
-          <h1 className="text-7xl font-bold text-white/80 dark:text-black opacity-0 animate-scintillement">
+          <h1 className="text-5xl font-bold text-white/80 dark:text-black opacity-0 animate-scintillement">
             Benjamin Montet
           </h1>
-          <p className="text-2xl text-white dark:text-black font-semibold italic">
+          <p className="text-xl text-white dark:text-black font-semibold italic">
             – Développeur Web Fullstack Junior -
           </p>
 
@@ -54,7 +111,7 @@ function App() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`
-                text-left text-2xl font-bold
+                text-left text-xl font-bold
                 transition-all duration-300 ease-in-out
                 ${
                   activeTab === tab
@@ -85,7 +142,7 @@ function App() {
             {activeTab === "accueil" && (
 
               <div className="gap-6">
-                <p className="text-2xl flex justify-end mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
+                <p className="text-xl flex justify-end mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
                   En reconversion professionnelle, j'ai évolué dans le domaine des
                   sciences tout au long de mon parcours professionnel.<br></br><br></br>
                   Passionné par Python, la résolution de problèmes complexes et
@@ -96,7 +153,7 @@ function App() {
                 <div flex className="flex justify-end">
                   <a
                     href="/CV_Benjamin.pdf"
-                    className="text-4xl w-fit border border-gray-300 hover:border-gray-400 text-white px-6 py-3 rounded-2xl font-semibold shadow"
+                    className="text-2xl w-fit border border-gray-300 hover:border-gray-400 text-white px-6 py-3 rounded-2xl font-semibold shadow"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -135,12 +192,13 @@ function App() {
 
             {activeTab === "contact" && (
               <div className="flex justify-center lg:justify-end gap-4 flex-wrap">
-                <p className="text-4xl flex justify-end mb-14 text-white">benjamin.montet.dev@gmail.com</p>
+                <i class="fas fa-envelope text-white text-xl mr-2"></i>
+                <p className="text-2xl flex justify-end mb-14 text-white">benjamin.montet.dev@gmail.com</p>
 
                 <div flex className="flex justify-end">
                   <a
                     href="https://www.linkedin.com/in/benjamin-montet-1a2141317/"
-                    className="text-4xl w-fit hover:border-gray-700 text-white"
+                    className="text-2xl w-fit hover:border-gray-700 text-white"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -161,6 +219,7 @@ function App() {
       </div>
 
     </main>
+
     </>
   );
 }

@@ -5,9 +5,11 @@
 @tailwind utilities;
 
 
-body {
-  background-color: #0c4b58;
+:root {
+  --vanta-color1: #28e5e5;
+  --vanta-color2: #6f1919;
 }
+
 
 @keyframes width-expand {
   from { width: 0; }
@@ -21,4 +23,16 @@ body {
 
 @keyframes draw {
   to { stroke-dashoffset: 0; }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bg-animated-gradient {
+  background: linear-gradient(-45deg, #ff6ec4, #7873f5, #47cacc, #fddb92);
+  background-size: 400% 400%;
+  animation: gradient 12s ease infinite;
 }
