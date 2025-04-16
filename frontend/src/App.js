@@ -3,23 +3,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from "three";
 import CELLS from "vanta/dist/vanta.cells.min";
 
-function ProjectCard({ title, description, image, link }) {
+
+function ProjectCard({ title, description, link, hashtags }) {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 w-full sm:w-80">
-      <div
-      className="rounded-md overflow-hidden shadow-lg
-      transform transition hover:scale-105 hover:shadow-2xl bg-gray-400/30
-      border border-white outline outline-20"
-      >
-        <img src={image} alt={title} className="w-full h-48 object-cover" />
-        <div className="p-4 text-center">
-          <h3 className="text-white text-xl font-semibold mb-2">{title}</h3>
-          <p className="text-white italic">{description}</p>
-        </div>
+    <a  href={link} target="_blank"
+        rel="noopener noreferrer"
+        className="w-full"
+    >
+      <div className="p-4 text-right mb-10">
+        <h3 className="text-[#afaba8] font-thin text-6xl mb-2 hover:-translate-x-2 transition-transform duration-1000 linear">{title}</h3>
+        <p className="text-white text-sm">{description}</p>
+        <p className="mt-2 text-white text-sm italic"
+                      // border border-white border-opacity-20 rounded-lg p-1"
+        >{hashtags}</p>
       </div>
+
     </a>
   );
 }
+{/* <Card.Text data-aos="wave" className="hashtags">
+{article.hashtags?.map((tag, index) => (
+  <span key={index} className="hashtag">
+    {tag}
+  </span>
+))}
+</Card.Text> */}
 
 function App() {
   const [activeTab, setActiveTab] = useState("accueil");
@@ -53,7 +61,7 @@ function App() {
         color1: vcolor1,
         color2: vcolor2,
         size: 0.2,
-        speed: 0.0,
+        speed: 2.0,
 
         zoom: 50,
       });
@@ -82,29 +90,30 @@ function App() {
                     opacity-40 z-0"></div>
 
       <div
-        // ref={vantaRef}
         className=" absolute inset-[50px]
                     w-auto h-auto flex flex-col lg:flex-row
-                    justify-between gap-12 shadow-xl p-10
+                    justify-between gap-12 shadow-xl
                     border border-white dark:border-black
-                    opacity-90 z-10">
+                    opacity-90 z-10 pt-5">
 
 
         {/* Colonne gauche : menu (Hero) */}
-        <div className="w-1/2 p-10 flex flex-col justify-start gap-6">
-          <h1 className="text-5xl font-bold text-white/80 dark:text-black opacity-0 animate-scintillement">
-            Benjamin Montet
-          </h1>
-          <p className="text-xl text-white dark:text-black font-semibold italic">
-            – Développeur Web Fullstack Junior -
-          </p>
+        <div className="w-1/2 p-16 flex flex-col gap-6">
+          <div className="transform -translate-x-full animate-slideInFromLeft">
+            <h1 className="text-5xl font-bold text-white/80 dark:text-black opacity-0 animate-scintillement">
+              Benjamin Montet
+            </h1>
+            <p className="mt-6 text-xl text-white dark:text-black font-semibold italic">
+              – Développeur Web Fullstack Junior -
+            </p>
+          </div>
 
           <div
             key={key}
             className="h-[0.5px] bg-gray-400/30 w-0 animate-[width-expand_0.5s_linear_0.9s_forwards]"
           ></div>
 
-          <nav className="flex flex-col justify-start gap-6 mt-28">
+          <nav className="flex flex-col justify-start gap-6 mt-28 transform translate-y-full animate-slideInFromDown">
 
           {["accueil", "projets", "contact"].map((tab) => (
             <button
@@ -112,7 +121,7 @@ function App() {
               onClick={() => setActiveTab(tab)}
               className={`
                 text-left text-xl font-bold
-                transition-all duration-300 ease-in-out
+                transition-all duration-1000 ease-in-out
                 ${
                   activeTab === tab
                     ? "text-gray-500 translate-x-2"
@@ -141,8 +150,8 @@ function App() {
           >
             {activeTab === "accueil" && (
 
-              <div className="gap-6">
-                <p className="text-xl flex justify-end mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
+              <div className="gap-6 flex flex-col">
+                <p className="text-base flex justify-start mb-14 ml-14 text-gray-400 text-white italic leading-relaxed">
                   En reconversion professionnelle, j'ai évolué dans le domaine des
                   sciences tout au long de mon parcours professionnel.<br></br><br></br>
                   Passionné par Python, la résolution de problèmes complexes et
@@ -167,25 +176,27 @@ function App() {
 
             {activeTab === "projets" && (
 
-              <div className="lg:justify-end">
-                <h2 className="text-white text-xl font-semibold italic mb-16">
+              <div className="flex flex-col justify-between w-full h-full">
+                <h2 className="text-white text-sm italic mb-16 justify-end">
                   Voici mes premiers projets de code 'en solo' pour aborder différentes technos.<br></br><br></br>
                   J'ai surtout été guidé par l'envie d'apprendre en m'amusant et en écoutant les envies de mon fils ❤️ ...
                 </h2>
-                {/* Ici tu peux réutiliser tes <ProjectCard /> */}
-                <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
-                  <ProjectCard
-                    title="PSG Infos"
-                    description="Fil d’actualités dynamique sur le PSG (React + API Django)"
-                    image="/psginfos.jpg"
-                    link="https://benjaminmontet.me/psginfos/"
-                  />
-                  <ProjectCard
-                    title="Snake"
-                    description="Jeu 'Snake' codé en Javascript"
-                    image="/snake.jpg"
-                    link="https://benjaminmontet.me/snake/"
-                  />
+
+                <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
+                  <div className="ml-auto max-w-base">
+                    <ProjectCard
+                      title="PSG Infos"
+                      description="Fil d’actualités dynamique sur le PSG"
+                      link="https://benjaminmontet.me/psginfos/"
+                      hashtags="#React #Django #Responsive"
+                    />
+                    <ProjectCard
+                      title="Snake"
+                      description="Jeu 'Snake'"
+                      link="https://benjaminmontet.me/snake/"
+                      hashtags="#JavaScript  #Game"
+                    />
+                  </div>
                 </div>
               </div>
             )}

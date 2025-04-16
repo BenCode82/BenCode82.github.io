@@ -18,7 +18,7 @@
 
 @keyframes height-expand {
   from { height: 0; }
-  to { height: 100%; }
+  to { height: 95%; }
 }
 
 @keyframes draw {
