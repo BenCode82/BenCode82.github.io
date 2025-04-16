@@ -5,29 +5,31 @@ import CELLS from "vanta/dist/vanta.cells.min";
 
 
 function ProjectCard({ title, description, link, hashtags }) {
-  return (
-    <a  href={link} target="_blank"
-        rel="noopener noreferrer"
-        className="w-full"
-    >
-      <div className="p-4 text-right mb-10">
-        <h3 className="text-[#afaba8] font-thin text-6xl mb-2 hover:-translate-x-2 transition-transform duration-1000 linear">{title}</h3>
-        <p className="text-white text-sm">{description}</p>
-        <p className="mt-2 text-white text-sm italic"
-                      // border border-white border-opacity-20 rounded-lg p-1"
-        >{hashtags}</p>
-      </div>
+  // Séparer les hashtags par l'espace (ou autre séparateur si nécessaire)
+  const hashtagArray = hashtags.split(' ').filter(tag => tag.startsWith('#'));
 
+
+  return (
+    <a href={link} target="_blank" rel="noopener noreferrer" className="w-full">
+      <div className="p-4 text-right mb-10">
+        <h3 className="text-[#afaba8] font-thin text-6xl mb-2 hover:-translate-x-2 transition-transform duration-1000 linear">
+          {title}
+        </h3>
+        <p className="text-white text-sm">{description}</p>
+        <div className="mt-2 flex gap-2 justify-end"> {/* Flex pour aligner horizontalement */}
+          {hashtagArray.map((tag, index) => (
+            <span
+              key={index}
+              className="text-white text-sm italic border border-white border-opacity-20 rounded-lg px-2 py-1"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </a>
   );
 }
-{/* <Card.Text data-aos="wave" className="hashtags">
-{article.hashtags?.map((tag, index) => (
-  <span key={index} className="hashtag">
-    {tag}
-  </span>
-))}
-</Card.Text> */}
 
 function App() {
   const [activeTab, setActiveTab] = useState("accueil");
@@ -113,7 +115,7 @@ function App() {
             className="h-[0.5px] bg-gray-400/30 w-0 animate-[width-expand_0.5s_linear_0.9s_forwards]"
           ></div>
 
-          <nav className="flex flex-col justify-start gap-6 mt-28 transform translate-y-full animate-slideInFromDown">
+          <nav className="opacity-0 flex flex-col justify-start gap-6 mt-28 transform translate-y-full animate-slideInFromDown">
 
           {["accueil", "projets", "contact"].map((tab) => (
             <button
@@ -161,7 +163,7 @@ function App() {
 
                 <div flex className="flex justify-end">
                   <a
-                    href="/CV_Benjamin.pdf"
+                    href="/CV Benjamin Montet.pdf"
                     className="text-2xl w-fit border border-gray-300 hover:border-gray-400 text-white px-6 py-3 rounded-2xl font-semibold shadow"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -224,10 +226,22 @@ function App() {
 
       </div>
 
-      {/* Footer en bas à gauche */}
+      {/* Footers en bas à gauche */}
       <div className="absolute bottom-4 left-4 text-sm text-white opacity-60">
         © Benjamin Montet
       </div>
+
+      {/* Footer avec toggle */}
+      {/* <div className="absolute bottom-4 right-4 text-sm opacity-60">
+        <button onClick={toggleTheme} className="flex items-center gap-2">
+          <span className={!isDarkMode ? "text-black" : "text-gray-400"}>
+            Jour {isDarkMode ? '□' : '■'}
+          </span>
+          <span className={isDarkMode ? "text-white" : "text-gray-400"}>
+            Nuit {isDarkMode ? '■' : '□'}
+          </span>
+        </button>
+      </div> */}
 
     </main>
 
